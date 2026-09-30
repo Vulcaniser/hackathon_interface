@@ -1,146 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Smart Cold Storage Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Milk Chilling Can remote monitoring dashboard">
+  <title>Smart Milk Chilling Can Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <header class="topbar">
-        <div class="brand">
-            <div class="brand-icon">❄</div>
-            <div>
-                <h1>Smart Cold Storage</h1>
-                <p>Remote monitoring dashboard</p>
-            </div>
-        </div>
-        <div class="connection"><span id="connectionDot" class="status-dot online"></span><span
-                id="connectionText">Connected</span></div>
-    </header>
-    <main class="dashboard">
-        <section class="welcome-row">
-            <div>
-                <p class="eyebrow">COLD STORAGE UNIT</p>
-                <h2>Storage Unit <span id="deviceId">COLD_STORAGE_01</span></h2>
-                <p class="muted">Last updated: <strong id="lastUpdated">--</strong></p>
-            </div><button class="refresh-btn" id="refreshBtn">↻ Refresh</button>
-        </section>
-        <section class="alert-banner safe" id="alertBanner">
-            <div class="alert-icon" id="alertIcon">✓</div>
-            <div><strong id="alertTitle">Storage condition is safe</strong>
-                <p id="alertMessage">The monitored conditions are within the configured range.</p>
-            </div>
-        </section>
-        <section class="metric-grid">
-            <article class="metric-card">
-                <div class="metric-icon">🌡️</div>
-                <div>
-                    <p>Temperature</p>
-                    <div class="metric-value"><span id="temperature">--</span><span class="unit">°C</span></div>
-                </div>
-            </article>
-            <article class="metric-card">
-                <div class="metric-icon">💧</div>
-                <div>
-                    <p>Humidity</p>
-                    <div class="metric-value"><span id="humidity">--</span><span class="unit">%</span></div>
-                </div>
-            </article>
-            <article class="metric-card">
-                <div class="metric-icon">●</div>
-                <div>
-                    <p>Storage status</p>
-                    <div class="metric-value text-value" id="storageStatus">--</div>
-                </div>
-            </article>
-            <article class="metric-card">
-                <div class="metric-icon">❄</div>
-                <div>
-                    <p>Cooling system</p>
-                    <div class="metric-value text-value" id="coolingState">--</div>
-                </div>
-            </article>
-        </section>
-        <section class="content-grid">
-            <article class="panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">LIVE MONITORING</p>
-                        <h3>Current readings</h3>
-                    </div><span class="live-badge">LIVE</span>
-                </div>
-                <div class="reading-list">
-                    <div class="reading-row"><span>Temperature</span><strong><span id="temperatureSmall">--</span>
-                            °C</strong></div>
-                    <div class="reading-row"><span>Humidity</span><strong><span id="humiditySmall">--</span> %</strong>
-                    </div>
-                    <div class="reading-row"><span>Cooling</span><strong id="coolingSmall">--</strong></div>
-                    <div class="reading-row"><span>System status</span><strong id="statusSmall">--</strong></div>
-                </div>
-            </article>
-            <article class="panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">SYSTEM HEALTH</p>
-                        <h3>Equipment status</h3>
-                    </div>
-                </div>
-                <div class="equipment-list">
-                    <div class="equipment-row"><span class="equipment-name">◉ Sensor</span><span class="pill good"
-                            id="sensorState">Online</span></div>
-                    <div class="equipment-row"><span class="equipment-name">⚙ Controller</span><span class="pill good"
-                            id="controllerState">Online</span></div>
-                    <div class="equipment-row"><span class="equipment-name">📡 Wi-Fi module</span><span
-                            class="pill good" id="wifiState">Online</span></div>
-                    <div class="equipment-row"><span class="equipment-name">☁ Data link</span><span class="pill good"
-                            id="serverState">Online</span></div>
-                </div>
-            </article>
-        </section>
-        <section class="panel history-panel">
-            <div class="panel-heading">
-                <div>
-                    <p class="eyebrow">RECENT DATA</p>
-                    <h3>Temperature history</h3>
-                </div><span class="muted small">Demo data — backend not connected</span>
-            </div>
-            <div class="chart-wrap"><canvas id="temperatureChart"></canvas></div>
-        </section>
-        <section class="help-grid">
-            <article class="help-card"><span class="help-icon">✓</span>
-                <div>
-                    <h3>Safe</h3>
-                    <p>Conditions are within the configured range.</p>
-                </div>
-            </article>
-            <article class="help-card warning-help"><span class="help-icon">!</span>
-                <div>
-                    <h3>Warning</h3>
-                    <p>Check the storage if temperature becomes too high.</p>
-                </div>
-            </article>
-            <article class="help-card"><span class="help-icon">📶</span>
-                <div>
-                    <h3>Connection</h3>
-                    <p>The dashboard shows when the remote unit is connected.</p>
-                </div>
-            </article>
-        </section>
-        <details class="developer-panel">
-            <summary>Developer preview: incoming JSON</summary>
-            <p>This is the frontend placeholder for the JSON payload that will eventually arrive from the
-                ESP8266/server.</p>
-            <pre id="jsonPreview">{}</pre>
-        </details>
-    </main>
-    <footer>
-        <p>Smart Cold Storage • Remote monitoring interface</p>
-        <p class="muted">Frontend prototype only — no backend or real network connection is included.</p>
-    </footer>
-    <script src="script.js"></script>
-</body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🥛</div>
+      <div>
+        <h1>Smart Milk Chilling Can</h1>
+        <p>Remote milk temperature monitoring</p>
+      </div>
+    </div>
 
+    <div class="connection" aria-label="Remote connection status">
+      <span id="connectionDot" class="status-dot online"></span>
+      <span id="connectionText">Connected</span>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <section class="welcome-row">
+      <div>
+        <p class="eyebrow">MILK COLLECTION UNIT</p>
+        <h2>Milk Can <span id="deviceId">MILK_CAN_01</span></h2>
+        <p class="muted">
+          Capacity: <strong id="capacity">40 L</strong>
+          <span class="separator">•</span>
+          Last updated: <strong id="lastUpdated">--</strong>
+        </p>
+      </div>
+
+      <button class="refresh-btn" id="refreshBtn" type="button">↻ Refresh</button>
+    </section>
+
+    <section class="target-banner">
+      <div class="target-icon">✓</div>
+      <div>
+        <strong>Recommended milk storage range: 4–8°C</strong>
+        <p>The dashboard alerts the user when milk temperature moves outside the safe monitoring range.</p>
+      </div>
+    </section>
+
+    <section class="alert-banner safe" id="alertBanner" aria-live="polite">
+      <div class="alert-icon" id="alertIcon">✓</div>
+      <div>
+        <strong id="alertTitle">Milk is within the safe temperature range</strong>
+        <p id="alertMessage">The monitored milk temperature is suitable for chilled storage.</p>
+      </div>
+    </section>
+
+    <section class="metric-grid" aria-label="Current milk chilling readings">
+
+      <article class="metric-card milk-temperature">
+        <div class="metric-icon">🌡️</div>
+        <div>
+          <p>Milk temperature</p>
+          <div class="metric-value">
+            <span id="milkTemperature">--</span><span class="unit">°C</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="metric-card ambient-temperature">
+        <div class="metric-icon">☀️</div>
+        <div>
+          <p>Ambient temperature</p>
+          <div class="metric-value">
+            <span id="ambientTemperature">--</span><span class="unit">°C</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="metric-card status-card">
+        <div class="metric-icon">●</div>
+        <div>
+          <p>Milk status</p>
+          <div class="metric-value text-value" id="milkStatus">--</div>
+        </div>
+      </article>
+
+      <article class="metric-card cooling">
+        <div class="metric-icon">❄</div>
+        <div>
+          <p>Cooling mode</p>
+          <div class="metric-value text-value" id="coolingState">--</div>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="content-grid">
+
+      <article class="panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">LIVE MONITORING</p>
+            <h3>Milk condition</h3>
+          </div>
+          <span class="live-badge">LIVE</span>
+        </div>
+
+        <div class="reading-list">
+          <div class="reading-row">
+            <span>Milk temperature</span>
+            <strong><span id="milkTemperatureSmall">--</span> °C</strong>
+          </div>
+
+          <div class="reading-row">
+            <span>Ambient temperature</span>
+            <strong><span id="ambientTemperatureSmall">--</span> °C</strong>
+          </div>
+
+          <div class="reading-row">
+            <span>Cooling</span>
+            <strong id="coolingSmall">--</strong>
+          </div>
+
+          <div class="reading-row">
+            <span>Milk status</span>
+            <strong id="statusSmall">--</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">POWER & SYSTEM HEALTH</p>
+            <h3>Can status</h3>
+          </div>
+        </div>
+
+        <div class="equipment-list">
+          <div class="equipment-row">
+            <span class="equipment-name"><span class="mini-icon">☀</span> Solar input</span>
+            <span class="pill good" id="solarState">Available</span>
+          </div>
+
+          <div class="equipment-row">
+            <span class="equipment-name"><span class="mini-icon">🔋</span> Battery</span>
+            <span class="pill good" id="batteryState">--</span>
+          </div>
+
+          <div class="equipment-row">
+            <span class="equipment-name"><span class="mini-icon">◉</span> Temperature sensor</span>
+            <span class="pill good" id="sensorState">Online</span>
+          </div>
+
+          <div class="equipment-row">
+            <span class="equipment-name"><span class="mini-icon">📡</span> Wi-Fi module</span>
+            <span class="pill good" id="wifiState">Online</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="panel history-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">RECENT DATA</p>
+          <h3>Milk temperature history</h3>
+        </div>
+
+        <span class="muted small">Frontend demo — backend not connected</span>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="temperatureChart" aria-label="Milk temperature history chart"></canvas>
+      </div>
+    </section>
+
+    <section class="info-grid">
+
+      <article class="info-card">
+        <span class="info-icon">🥛</span>
+        <div>
+          <h3>30–40 L capacity</h3>
+          <p>Designed around the expected village-level milk collection and transport use case.</p>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <span class="info-icon">🧊</span>
+        <div>
+          <h3>4–8°C target</h3>
+          <p>The system monitors the milk temperature against the intended chilled-storage range.</p>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <span class="info-icon">☀️</span>
+        <div>
+          <h3>Solar-assisted operation</h3>
+          <p>Solar power can support active chilling and battery charging, while insulation and cold storage media help during power interruptions.</p>
+        </div>
+      </article>
+
+      <article class="info-card">
+        <span class="info-icon">📡</span>
+        <div>
+          <h3>Remote monitoring</h3>
+          <p>Temperature and system data can be transmitted through the ESP8266 communication layer.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <details class="developer-panel">
+      <summary>Developer preview: incoming JSON</summary>
+
+      <p>
+        This is the frontend placeholder for the JSON payload that will eventually be received
+        from the ESP8266/server.
+      </p>
+
+      <pre id="jsonPreview">{}</pre>
+    </details>
+
+  </main>
+
+  <footer>
+    <p>Smart Milk Chilling Can • Remote monitoring interface</p>
+    <p class="muted">Frontend prototype only — no backend or real network connection is included.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
